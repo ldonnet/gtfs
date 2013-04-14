@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe GTFS::Source do
+describe Gtfs::Source do
   let(:valid_local_source) do
     File.expand_path(File.dirname(__FILE__) + '/../fixtures/valid_gtfs.zip')
   end
@@ -12,28 +12,28 @@ describe GTFS::Source do
   describe '#build' do
     let(:opts) {{}}
     let(:data_source) {valid_local_source}
-    subject {GTFS::Source.build(data_source, opts)}
+    subject {Gtfs::Source.build(data_source, opts)}
 
     context 'with a url as a data root' do
       use_vcr_cassette('valid_gtfs_uri')
       let(:data_source) {'http://dl.dropbox.com/u/416235/work/valid_gtfs.zip'}
 
-      it {should be_instance_of GTFS::URLSource}
-      its(:options) {should == GTFS::Source::DEFAULT_OPTIONS}
+      it {should be_instance_of Gtfs::URLSource}
+      its(:options) {should == Gtfs::Source::DEFAULT_OPTIONS}
     end
 
     context 'with a file path as a data root' do
       let(:data_source) {valid_local_source}
 
-      it {should be_instance_of GTFS::LocalSource}
-      its(:options) {should == GTFS::Source::DEFAULT_OPTIONS}
+      it {should be_instance_of Gtfs::LocalSource}
+      its(:options) {should == Gtfs::Source::DEFAULT_OPTIONS}
     end
 
     context 'with a file object as a data root' do
       let(:data_source) {File.open(valid_local_source)}
 
-      it {should be_instance_of GTFS::LocalSource}
-      its(:options) {should == GTFS::Source::DEFAULT_OPTIONS}
+      it {should be_instance_of Gtfs::LocalSource}
+      its(:options) {should == Gtfs::Source::DEFAULT_OPTIONS}
     end
 
     context 'with options to disable strict checks' do
@@ -44,8 +44,8 @@ describe GTFS::Source do
   end
 
   describe '#new(source)' do
-    it 'should not allow a base GTFS::Source to be initialized' do
-      lambda {GTFS::Source.new(valid_local_source)}.should raise_exception
+    it 'should not allow a base Gtfs::Source to be initialized' do
+      lambda {Gtfs::Source.new(valid_local_source)}.should raise_exception
     end
   end
 
@@ -53,10 +53,10 @@ describe GTFS::Source do
     subject {source.agencies}
 
     context 'when the source has agencies' do
-      let(:source) {GTFS::Source.build(valid_local_source)}
+      let(:source) {Gtfs::Source.build(valid_local_source)}
 
       it {should_not be_empty}
-      its(:first) {should be_an_instance_of(GTFS::Agency)}
+      its(:first) {should be_an_instance_of(Gtfs::Agency)}
     end
   end
 
@@ -65,10 +65,10 @@ describe GTFS::Source do
 
   describe '#routes' do
     context 'when the source is missing routes' do
-      let(:source) { GTFS::Source.build source_missing_required_files }
+      let(:source) { Gtfs::Source.build source_missing_required_files }
 
       it do
-        expect { source.routes }.to raise_exception GTFS::InvalidSourceException
+        expect { source.routes }.to raise_exception Gtfs::InvalidSourceException
       end
     end
   end

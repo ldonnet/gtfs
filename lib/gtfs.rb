@@ -1,19 +1,4 @@
-require 'gtfs/version'
-require 'gtfs/model'
-require 'gtfs/agency'
-require 'gtfs/calendar'
-require 'gtfs/calendar_date'
-require 'gtfs/route'
-require 'gtfs/shape'
-require 'gtfs/stop'
-require 'gtfs/stop_time'
-require 'gtfs/trip'
-require 'gtfs/custom_exceptions'
-require 'gtfs/fare_attribute'
-require 'gtfs/fare_rule'
-require 'gtfs/frequency'
-require 'gtfs/transfer'
+require "gtfs/engine"
 
-require 'gtfs/source'
-require 'gtfs/url_source'
-require 'gtfs/local_source'
+module Gtfs
+end
